@@ -367,6 +367,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1454334239}
   - component: {fileID: 1454334238}
+  - component: {fileID: 1454334240}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -385,7 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7947c65095fb2f4cb4ceadda01cf5e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _howMany: 10
+  _howMany: 1000
   _emitter: {fileID: 1416921358}
   _pickRandomTarget: 0
   _sendToFakeTarget: 0
@@ -405,3 +406,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1454334240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1454334237}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31412678cc60b654f8e52b7e48742b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loop: 1000
+  _setWrongType: 0
+  _getWrongType: 0

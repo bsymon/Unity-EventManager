@@ -1,48 +1,78 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Tools {
 
 public class EventPayload {
 	
-	Hashtable parameters;
+	Dictionary<string, object> parameters = new Dictionary<string, object>();
+	List<string> keys = new List<string>();
 	
 	// -- //
 	
-	public EventPayload() {
-		parameters = new Hashtable();
-	}
-	
 	public bool Add(string parameterName, object value) {
-		if(parameters.ContainsKey(parameterName)) {
+		try {
+			parameters.Add(parameterName, value);
+			keys.Add(parameterName);
+			return true;
+		} catch(System.ArgumentException) {
 			Debug.LogError("EventPayload : The key '" + parameterName + "' already exists");
-			return false;
 		}
 		
-		parameters.Add(parameterName, value);
-		return true;
+		return false;
+	}
+	
+	public bool Has(string parameterName) {
+		return parameters.ContainsKey(parameterName);
 	}
 	
 	public T Get<T>(string parameterName) {
-		if(!parameters.ContainsKey(parameterName)) {
-			return default(T);
+		bool goodType = false;
+		object value;
+		
+		if(parameters.TryGetValue(parameterName, out value)) {
+			goodType = value is T;
+			if(!goodType) {
+				Debug.LogWarning("EventPayload : The key '" + parameterName + "' is not of type '" + typeof(T).Name + "'. Returning default value of type '" + typeof(T).Name + "'");
+			}
 		}
 		
-		object value = parameters[parameterName];
-		
-		if(!(value is T)) {
-			Debug.LogWarning("EventPayload : The key '" + parameterName + "' is not of type '" + typeof(T).Name + "'. Returning default value of type '" + typeof(T).Name + "'");
+		return goodType ? (T) value : default(T);
+	}
+	
+	public bool Set(string parameterName, object value) {
+		try {
+			if(value.GetType() == parameters[parameterName].GetType()) {
+				parameters[parameterName] = value;
+				return true;
+			}
+		} catch(KeyNotFoundException) {
+			Debug.LogError("EventPayload : The key '" + parameterName + "' doesn't exist");
 		}
 		
-		return value is T ? (T) parameters[parameterName] : default(T);
+		return false;
+	}
+	
+	public int GetParametersOfType<T>(ref string[] output) {
+		int nbOfParameters = 0;
+		int maxLoop        = Mathf.Min(output != null ? output.Length : 0, keys.Count);
+		
+		for(int i = 0; i < maxLoop; ++ i) {
+			string key = keys[i];
+			
+			if(parameters[key] is T) {
+				output[nbOfParameters] = key;
+				nbOfParameters++;
+			}
+		}
+		
+		return nbOfParameters;
 	}
 	
 	public void Clear() {
 		parameters.Clear();
+		keys.Clear();
 	}
-	
-	
 	
 }
 
