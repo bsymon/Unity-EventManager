@@ -63,14 +63,16 @@ public class EventManager : MonoBehaviour {
 	}
 	
 	void _Trigger(string eventName, EventPayload data = null, object target = null, object emitter = null) {
-		if(events.ContainsKey(eventName)) {
-			events[eventName].Emitter = emitter;
-			events[eventName].Target  = target;
+		EventInvoker<EventPayload> invoker;
+		
+		if(events.TryGetValue(eventName, out invoker)) {
+			invoker.Emitter = emitter;
+			invoker.Target  = target;
 			
 			if(data == null) {
-				events[eventName].Invoke();
+				invoker.Invoke();
 			} else {
-				events[eventName].Invoke(data);
+				invoker.Invoke(data);
 			}
 		}
 	}
