@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Game.Tools {
 
-public class EventManager : MonoBehaviour {
+public class EventManager {
 	
 	static EventManager instance;
 	static public EventManager Instance {
 		get {
 			if(instance == null) {
-				instance = GameObject.FindGameObjectWithTag("GameManager").GetComponent<EventManager>();
+				instance = new EventManager();
 			}
 			
 			return instance;
