@@ -42,7 +42,7 @@ public class EventPayload {
 	
 	public bool Set(string parameterName, object value) {
 		try {
-			if(value.GetType() == parameters[parameterName].GetType()) {
+			if(parameters[parameterName] == null || value.GetType() == parameters[parameterName].GetType()) {
 				parameters[parameterName] = value;
 				return true;
 			}
