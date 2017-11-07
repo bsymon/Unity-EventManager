@@ -5,6 +5,10 @@ namespace Game.Tools {
 
 public class EventManager {
 	
+	const string NO_EVENT = "";
+	
+	// -- //
+	
 	static EventManager instance;
 	static public EventManager Instance {
 		get {
@@ -16,9 +20,14 @@ public class EventManager {
 		}
 	}
 	
+	static public string CurrentEvent {
+		get { return Instance.currentEvent; }
+	}
+	
 	// -- //
 	
 	Dictionary<string, EventInvoker<EventPayload>> events = new Dictionary<string, EventInvoker<EventPayload>>();
+	string currentEvent;
 	
 	// -- //
 	
@@ -66,6 +75,7 @@ public class EventManager {
 		EventInvoker<EventPayload> invoker;
 		
 		if(events.TryGetValue(eventName, out invoker)) {
+			currentEvent    = eventName;
 			invoker.Emitter = emitter;
 			invoker.Target  = target;
 			
@@ -74,6 +84,8 @@ public class EventManager {
 			} else {
 				invoker.Invoke(data);
 			}
+			
+			currentEvent = NO_EVENT;
 		}
 	}
 	

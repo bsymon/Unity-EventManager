@@ -114,7 +114,9 @@ public class EventInvoker<T> {
 	}
 	
 	public void Invoke() {
-		_Invoke(ref listenersWithoutData, false);
+		if(listenersWithoutData.Count > 0) {
+			_Invoke(ref listenersWithoutData, false);
+		}
 	}
 	
 	public void Invoke(T data) {
@@ -122,9 +124,7 @@ public class EventInvoker<T> {
 			_Invoke(ref listenersWithData, true, data);
 		}
 		
-		if(listenersWithoutData.Count > 0) {
-			Invoke();
-		}
+		Invoke();
 	}
 	
 }

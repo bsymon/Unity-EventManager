@@ -16,25 +16,25 @@ public class DummyListener {
 	
 	void OnTest() {
 		if(TestCase.DEBUG_MESSAGE_IN_LISTENERS) {
-			Debug.Log("No Data");
+			Debug.Log("Event : " + EventManager.CurrentEvent + " | No Data");
 		}
 	}
 	
 	void OnTestWithData(EventPayload data) {
 		if(TestCase.DEBUG_MESSAGE_IN_LISTENERS) {
-			Debug.Log("Data : " + data.Get<string>("Text"));
+			Debug.Log("Event : " + EventManager.CurrentEvent + " | Data : " + data.Get<string>("Text"));
 		}
 	}
 	
 	void OnTestForEmitter() {
 		if(TestCase.DEBUG_MESSAGE_IN_LISTENERS) {
-			Debug.Log("Emitter triggered the event");
+			Debug.Log("Event : " + EventManager.CurrentEvent + " | Emitter triggered the event");
 		}
 	}
 	
 	void OnTestWithDataForEmitter(EventPayload data) {
 		if(TestCase.DEBUG_MESSAGE_IN_LISTENERS) {
-			Debug.Log("Emitter triggered the event. Data : " + data.Get<string>("Text"));
+			Debug.Log("Event : " + EventManager.CurrentEvent + " | Emitter triggered the event. Data : " + data.Get<string>("Text"));
 		}
 	}
 	
